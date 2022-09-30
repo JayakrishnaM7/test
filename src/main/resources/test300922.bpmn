@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="Definitions_0fr9mxs" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="2.2.4">
+    <bpmn:process id="test300922" name="test300922" isExecutable="true">
+
+        <bpmn:startEvent id="id_613af70a-3c16-4b0e-9c4c-295229d62eaa">
+            <bpmn:outgoing>id_9f3ab2c2-5e90-4b7d-bb5b-f45e35910680</bpmn:outgoing>
+        </bpmn:startEvent>
+
+        <bpmn:endEvent id="id_ced1557e-f813-411f-9825-63d2a7cbc66f">
+            <bpmn:incoming>id_ea5da3dc-ce64-4ed0-95d3-76fc2e262ad4</bpmn:incoming>
+        </bpmn:endEvent>
+
+        <bpmn:serviceTask id="id_40b04e11-1b16-4bae-a47f-914e556b2904" name="saga-node" camunda:asyncBefore="true" camunda:class="com.ibm.dip.adapters.test">
+            <bpmn:incoming>id_9f3ab2c2-5e90-4b7d-bb5b-f45e35910680</bpmn:incoming>
+            <bpmn:outgoing>id_ea5da3dc-ce64-4ed0-95d3-76fc2e262ad4</bpmn:outgoing>
+        </bpmn:serviceTask>
+
+
+
+
+
+
+        <bpmn:sequenceFlow id="id_ea5da3dc-ce64-4ed0-95d3-76fc2e262ad4" sourceRef="id_40b04e11-1b16-4bae-a47f-914e556b2904" targetRef="id_ced1557e-f813-411f-9825-63d2a7cbc66f"/>
+        <bpmn:sequenceFlow id="id_9f3ab2c2-5e90-4b7d-bb5b-f45e35910680" sourceRef="id_613af70a-3c16-4b0e-9c4c-295229d62eaa" targetRef="id_40b04e11-1b16-4bae-a47f-914e556b2904"/>
+
+        <bpmn:subProcess id="SubProcess_10gul9f" triggeredByEvent="true">
+            <bpmn:startEvent id="StartEvent_1vroe4j">
+                <bpmn:outgoing>SequenceFlow_0v8nfh9</bpmn:outgoing>
+                <bpmn:errorEventDefinition id="ErrorEventDefinition_0s24ktu" errorRef="Error_1dml388" />
+            </bpmn:startEvent>
+            <bpmn:intermediateThrowEvent id="IntermediateThrowEvent_0wrqa3o">
+                <bpmn:incoming>SequenceFlow_0v8nfh9</bpmn:incoming>
+                <bpmn:outgoing>SequenceFlow_1vuwcqy</bpmn:outgoing>
+                <bpmn:compensateEventDefinition id="CompensateEventDefinition_0de6hep" />
+            </bpmn:intermediateThrowEvent>
+            <bpmn:endEvent id="EndEvent_0unn4fa">
+                <bpmn:incoming>SequenceFlow_1vuwcqy</bpmn:incoming>
+            </bpmn:endEvent>
+            <bpmn:sequenceFlow id="SequenceFlow_1vuwcqy" sourceRef="IntermediateThrowEvent_0wrqa3o" targetRef="EndEvent_0unn4fa" />
+            <bpmn:sequenceFlow id="SequenceFlow_0v8nfh9" sourceRef="StartEvent_1vroe4j" targetRef="IntermediateThrowEvent_0wrqa3o" />
+        </bpmn:subProcess>
+
+
+    </bpmn:process>
+    <bpmn:error id="Error_1dml388" errorCode="java.lang.Throwable" />
+
+    <bpmndi:BPMNDiagram id="BPMDiagram_1">
+        <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="test300922">
+            <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="id_613af70a-3c16-4b0e-9c4c-295229d62eaa">
+                <dc:Bounds x="376" y="189" width="36" height="36" />
+            </bpmndi:BPMNShape>
+
+            <bpmndi:BPMNShape id="ServiceTask_id_40b04e11-1b16-4bae-a47f-914e556b2904" bpmnElement="id_40b04e11-1b16-4bae-a47f-914e556b2904">
+                <dc:Bounds x="624" y="79" width="100" height="80" />
+            </bpmndi:BPMNShape>
+
+
+
+
+
+            <bpmndi:BPMNShape id="EndEvent_0x6ir2l_di" bpmnElement="id_ced1557e-f813-411f-9825-63d2a7cbc66f">
+                <dc:Bounds x="954" y="210" width="36" height="36" />
+            </bpmndi:BPMNShape>
+
+            <bpmndi:BPMNEdge id="SequenceFlow_id_ea5da3dc-ce64-4ed0-95d3-76fc2e262ad4" bpmnElement="id_ea5da3dc-ce64-4ed0-95d3-76fc2e262ad4">
+                <di:waypoint x="624" y="79" />
+                <di:waypoint x="954" y="210" />
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge id="SequenceFlow_id_9f3ab2c2-5e90-4b7d-bb5b-f45e35910680" bpmnElement="id_9f3ab2c2-5e90-4b7d-bb5b-f45e35910680">
+                <di:waypoint x="376" y="189" />
+                <di:waypoint x="624" y="79" />
+            </bpmndi:BPMNEdge>
+
+            <bpmndi:BPMNShape id="SubProcess_10gul9f_di" bpmnElement="SubProcess_10gul9f" isExpanded="true">
+                <dc:Bounds x="18" y="424" width="315" height="165" />
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape id="StartEvent_1vroe4j_di" bpmnElement="StartEvent_1vroe4j">
+                <dc:Bounds x="68" y="471" width="36" height="36" />
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape id="IntermediateThrowEvent_0wrqa3o_di" bpmnElement="IntermediateThrowEvent_0wrqa3o">
+                <dc:Bounds x="154" y="471" width="36" height="36" />
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape id="EndEvent_0unn4fa_di" bpmnElement="EndEvent_0unn4fa">
+                <dc:Bounds x="240" y="471" width="36" height="36" />
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNEdge id="SequenceFlow_1vuwcqy_di" bpmnElement="SequenceFlow_1vuwcqy">
+                <di:waypoint x="190" y="489" />
+                <di:waypoint x="240" y="489" />
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge id="SequenceFlow_0v8nfh9_di" bpmnElement="SequenceFlow_0v8nfh9">
+                <di:waypoint x="104" y="489" />
+                <di:waypoint x="154" y="489" />
+            </bpmndi:BPMNEdge>
+
+        </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+
+
+</bpmn:definitions>
